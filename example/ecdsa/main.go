@@ -23,8 +23,8 @@ import (
 	s256k1 "github.com/btcsuite/btcd/btcec"
 )
 
-const threshold = 3
-const partyCount = 5
+const threshold = 1
+const partyCount = 3
 
 func main() {
 	// tss.SetCurve(s256k1.S256())
@@ -39,8 +39,8 @@ func main() {
 	for i := 0; i < partyCount; i++ {
 		party := genNewParty(i)
 		parties = append(parties, party)
-		outs = append(outs, make(chan tss.Message))
-		ins = append(ins, make(chan tss.Message))
+		outs = append(outs, make(chan tss.Message, 2))
+		ins = append(ins, make(chan tss.Message, 2))
 		saves = append(saves, make(chan keygen.LocalPartySaveData))
 	}
 

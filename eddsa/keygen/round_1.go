@@ -7,7 +7,9 @@
 package keygen
 
 import (
+	"encoding/hex"
 	"errors"
+	"fmt"
 	"math/big"
 
 	"github.com/bnb-chain/tss-lib/common"
@@ -41,7 +43,8 @@ func (round *round1) Start() *tss.Error {
 	// 1. calculate "partial" key share ui
 	ui := common.GetRandomPositiveInt(round.Params().EC().Params().N)
 	round.temp.ui = ui
-
+	fmt.Println("ui", hex.EncodeToString(ui.Bytes()))
+	//fmt.Println("N", hex.EncodeToString(round.Params().EC().Params().N.Bytes()))
 	// 2. compute the vss shares
 	ids := round.Parties().IDs().Keys()
 	vs, shares, err := vss.Create(round.Params().EC(), round.Threshold(), ui, ids)
